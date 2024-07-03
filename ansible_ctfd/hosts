@@ -1,2 +1,2 @@
 [ctfd_server]
-your_server_ip_or_hostname
+40.87.89.20 ansible_user=unisinos

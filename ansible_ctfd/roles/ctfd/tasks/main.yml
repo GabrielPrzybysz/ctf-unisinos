@@ -1,24 +1,19 @@
 ---
-- name: Clone the CTFd repository
+- name: Check if CTFd repository is cloned
+  stat:
+    path: /home/unisinos/CTFd
+  register: ctfd_repo
+
+- name: Clone the CTFd repository if not already cloned
   git:
     repo: 'https://github.com/GabrielPrzybysz/CTFd.git'
     dest: /home/unisinos/CTFd
+  when: not ctfd_repo.stat.exists
 
-- name: Install Python dependencies
-  pip:
-    requirements: /home/unisinos/CTFd/requirements.txt
-
-- name: Make prepare.sh executable
-  file:
-    path: /home/unisinos/CTFd/prepare.sh
-    mode: '0755'
-
-- name: Run prepare.sh
-  command: ./prepare.sh
-  args:
-    chdir: /home/unisinos/CTFd
-
-- name: Running CTFd in debug mode
-  command: python serve.py
-  args:
-    chdir: /home/unisinos/CTFd
+- name: Ensure CTFd Docker container is running
+  docker_container:
+    name: ctfd
+    image: ctfd/ctfd
+    state: started
+    ports:
+      - "8000:8000"

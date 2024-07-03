@@ -2,6 +2,5 @@
 - hosts: ctfd_server
   become: yes
   roles:
-    - ssh
     - docker
     - ctfd
