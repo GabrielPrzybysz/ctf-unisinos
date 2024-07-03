@@ -1,0 +1,24 @@
+---
+- name: Clone the CTFd repository
+  git:
+    repo: 'https://github.com/GabrielPrzybysz/CTFd.git'
+    dest: /home/unisinos/CTFd
+
+- name: Install Python dependencies
+  pip:
+    requirements: /home/unisinos/CTFd/requirements.txt
+
+- name: Make prepare.sh executable
+  file:
+    path: /home/unisinos/CTFd/prepare.sh
+    mode: '0755'
+
+- name: Run prepare.sh
+  command: ./prepare.sh
+  args:
+    chdir: /home/unisinos/CTFd
+
+- name: Running CTFd in debug mode
+  command: python serve.py
+  args:
+    chdir: /home/unisinos/CTFd

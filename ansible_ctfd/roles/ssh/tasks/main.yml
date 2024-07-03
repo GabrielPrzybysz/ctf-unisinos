@@ -1,0 +1,35 @@
+---
+- name: Generate SSH key pair for Ansible
+  command: ssh-keygen -t rsa -b 2048 -f /root/.ssh/id_rsa_ansible -N ""
+
+- name: Ensure ~/.ssh directory exists
+  file:
+    path: /home/unisinos/.ssh
+    state: directory
+    mode: 0700
+
+- name: Ensure authorized_keys file exists
+  file:
+    path: /home/unisinos/.ssh/authorized_keys
+    state: touch
+    mode: '0600'
+    owner: unisinos
+    group: unisinos
+
+- name: Copy public key to server
+  authorized_key:
+    user: unisinos
+    state: present
+    key: "{{ lookup('file', '/root/.ssh/id_rsa_ansible.pub') }}"
+
+- name: Disable password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    state: present
+
+- name: Restart SSH service
+  service:
+    name: sshd
+    state: restarted
