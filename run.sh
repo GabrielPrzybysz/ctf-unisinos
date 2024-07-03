@@ -21,7 +21,7 @@ az login
 
 az group create --name $RESOURCE_GROUP --location $LOCATION
 
-az deployment group create --resource-group $RESOURCE_GROUP --template-file $BICEP_FILE
+az deployment group create --resource-group $RESOURCE_GROUP --template-file $BICEP_FILE --parameters ./bicep/init.params.json
 
 VM_IP=$(az network public-ip show --resource-group $RESOURCE_GROUP --name ${INFRA_PREFIX}-pip --query "ipAddress" --output tsv)
 
