@@ -8,8 +8,7 @@ ADMIN_PASSWORD=""
 
 sudo apt-get update
 sudo apt-get install -y curl apt-transport-https lsb-release software-properties-common
-
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+sudo apt install azure-cli
 
 az bicep install
 
