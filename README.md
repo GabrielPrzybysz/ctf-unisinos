@@ -9,7 +9,7 @@ What do you need?
 
 1. ```az login ```
 
-2. update ./bicep/params/init.params.json with the credentials that you want
+2. update ./bicep/params/init.params.json with the password that you want
 
 2.  ```az group create --name ctf-unisinos --location eastus ```
 
