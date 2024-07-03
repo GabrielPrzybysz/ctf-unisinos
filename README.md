@@ -1,13 +1,15 @@
 # ctf-unisinos
 
-chmod +x ./run.sh
+O que é necessário?
 
-./run.sh
+- Azure CLI
+- Azure Bicep 
+- Ansible
 
-az login
+1. az login
 
-az group create --name ctf-unisinos --location eastus
+2. az group create --name ctf-unisinos --location eastus
 
-az deployment group create --resource-group ctf-unisinos-rg  --template-file init.bicep --parameters init.params.json
+3. az deployment group create --resource-group ctf-unisinos-rg  --template-file ./bicep/init.bicep --parameters ./bicep/params/init.params.json
 
-ansible-playbook -i ./ansible_ctfd/hosts ./ansible_ctfd/playbook.yaml
+4. ansible-playbook -i ./ansible_ctfd/hosts ./ansible_ctfd/playbook.yaml
